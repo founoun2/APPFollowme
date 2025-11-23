@@ -1,0 +1,56 @@
+type User @table {
+  username: String!
+  email: String!
+  passwordHash: String!
+  createdAt: Timestamp!
+  displayName: String
+  profilePictureUrl: String
+  bio: String
+}
+
+type SocialAccount @table {
+  user: User!
+  platform: String!
+  platformUserId: String!
+  accessToken: String!
+  createdAt: Timestamp!
+  profileUrl: String
+}
+
+type CoinTransaction @table {
+  user: User!
+  type: String!
+  amount: Int!
+  balanceAfter: Int!
+  createdAt: Timestamp!
+  description: String
+  referenceId: UUID
+}
+
+type Boost @table {
+  user: User!
+  socialAccount: SocialAccount
+  targetMetric: String!
+  targetUrl: String!
+  coinsSpent: Int!
+  status: String!
+  createdAt: Timestamp!
+  quantityDesired: Int
+  actualQuantityAchieved: Int
+}
+
+type PremiumFeature @table {
+  name: String!
+  description: String!
+  costInCoins: Int!
+  createdAt: Timestamp!
+  durationDays: Int
+}
+
+type PremiumFeatureUnlock @table {
+  user: User!
+  premiumFeature: PremiumFeature!
+  unlockedAt: Timestamp!
+  coinsSpent: Int!
+  expiresAt: Timestamp
+}
